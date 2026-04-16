@@ -1,0 +1,30 @@
+Recently, I set up and troubleshooted a Docker environment inside WSL (Ubuntu on Windows), focusing on system-level configuration and container runtime reliability. 
+
+🔹 Problem Scope
+The initial setup failed due to multiple infrastructure-level issues:
+- Docker daemon not starting correctly in WSL (no systemd support)
+- iptables / nftables incompatibility affecting Docker bridge networking
+- Docker socket permission issues preventing CLI access
+- DNS and network resolution issues impacting image pulls from Docker Hub
+- Container runtime initialization errors (containerd + networking stack)
+
+🔹 Approach & Debugging
+- I systematically diagnosed and resolved issues across multiple layers:
+- Configured and validated Docker daemon (dockerd) execution in WSL
+- Resolved Linux permission model issues using Docker group management
+- Fixed networking stack by switching iptables to legacy mode
+- Analyzed Docker and containerd logs to identify runtime failures
+- Verified connectivity and stabilized image pulling from registry
+- Tested end-to-end container execution workflow
+
+🔹 Outcome
+- Fully functional Docker environment running inside WSL
+- Successful execution of container lifecycle (pull → run → exit)
+- Stable networking and container runtime behavior
+
+🔹 Key Technical Learnings
+- Docker architecture: daemon vs CLI separation
+- Linux networking (iptables, bridge networks, NAT rules)
+- WSL limitations without systemd and their impact on services
+- Container runtime internals (containerd, overlayfs)
+- Debugging infrastructure issues using system logs and CLI tools
